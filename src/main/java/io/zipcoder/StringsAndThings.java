@@ -1,10 +1,13 @@
 package io.zipcoder;
-
+import java.util.regex.*;
 
 /**
  * @author tariq
+ * Earl Atta-Fynn
+ * 11/2/2020
  */
 public class StringsAndThings {
+
 
     /**
      * Given a string, count the number of words ending in 'y' or 'z' -- so the 'y' in "heavy" and the 'z' in "fez" count,
@@ -15,7 +18,23 @@ public class StringsAndThings {
      *           countYZ("day fyyyz"); // Should return 2
      */
     public Integer countYZ(String input){
-        return null;
+
+        char[] in = input.toCharArray();
+        Integer count = 0;
+        String query1 = "y ";
+        String query2 = "z ";
+
+        if (in[in.length - 1] == 'y' || in[in.length - 1] == 'z') {
+
+            count += 1;
+        }
+
+        if (input.indexOf(query1) > -1 || input.indexOf(query2) > -1) {
+
+            count += 1;
+        }
+
+        return count;
     }
 
     /**
@@ -28,7 +47,9 @@ public class StringsAndThings {
      *           removeString("Hello there", "x") // Should return "Hello there"
      */
     public String removeString(String base, String remove){
-        return null;
+
+        String excised = base.replaceAll(remove, "");
+        return excised;
     }
 
     /**
@@ -39,10 +60,35 @@ public class StringsAndThings {
      *           containsEqualNumberOfIsAndNot("This is notnot") // Should return true
      *           containsEqualNumberOfIsAndNot("noisxxnotyynotxisi") // Should return true
      */
-    public Boolean containsEqualNumberOfIsAndNot(String input){
-        return null;
-    }
 
+    public Boolean containsEqualNumberOfIsAndNot(String input) {
+
+        Pattern patternIs = Pattern.compile("is");
+        Matcher queryIs = patternIs.matcher(input);
+        Pattern patternNot = Pattern.compile("not");
+        Matcher queryNot = patternNot.matcher(input);
+        Integer countIs = 0;
+        Integer countNot = 0;
+        Boolean result = null;
+
+        while (queryIs.find()) {
+            countIs++;
+        }
+
+        while(queryNot.find()) {
+            countNot++;
+        }
+
+        if (countIs == countNot) {
+            result = true;
+        }
+
+        if (countIs != countNot) {
+            result = false;
+        }
+
+        return result;
+    }
     /**
      * We'll say that a lowercase 'g' in a string is "happy" if there is another 'g' immediately to its left or right.
      * Return true if all the g's in the given string are happy.
@@ -51,8 +97,36 @@ public class StringsAndThings {
      *           gHappy("xxggyygxx") // Should return  false
      */
     public Boolean gIsHappy(String input){
-        return null;
+
+        Pattern pattern = Pattern.compile("gg");
+        Matcher query = pattern.matcher(input);
+        Boolean result = null;
+
+        if (query.find() != true) {
+
+            result = false;
+
+        }
+
+        else {
+
+            String filtered = input.replaceAll("gg", "");
+
+            if (filtered.contains("g")) {
+
+                result = false;
+
+            } else {
+
+                result = true;
+
+            }
+        }
+
+        return result;
     }
+
+
 
 
     /**
@@ -63,6 +137,17 @@ public class StringsAndThings {
      *            countTriple("a") // Should return 0
      */
     public Integer countTriple(String input){
-        return null;
+
+        //Convert to charArray
+        char[] in = input.toCharArray();
+        int tripletCount = 0;
+
+        //Iterate over char array and find triples
+        for (int i = 0; i < in.length; i++) {
+            if ( i <= in.length-3 && in[i] == in[i+1] && in[i+1] == in[i+2]) {
+                tripletCount++;
+            }
+        }
+        return tripletCount;
     }
 }
